@@ -85,14 +85,18 @@ function destroy(req, res) {
       error: "Resource not found",
     });
   }
+
+  // Stampo in console l'elemento eliminato
+  console.log("Elemento eliminato: ", deleted);
+
   // Cancello l'elemento dall'array
   posts.splice(posts.indexOf(deleted), 1);
 
-  // Ritorno alla chiamata sia l'elemento eliminato che il nuovo array di elementi
-  res.json({
-    deleted,
-    posts,
-  });
+  // Stampo in console la lista aggiornata
+  console.log("Lista aggiornata: ", posts);
+
+  // Ritorno alla chiamata uno stato 204
+  res.sendStatus(204);
 }
 
 module.exports = { index, show, store, update, modify, destroy };
