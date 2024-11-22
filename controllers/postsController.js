@@ -99,7 +99,7 @@ function update(req, res) {
   post.img = img;
   post.tags = tags;
 
-  res.json(post);
+  res.sendStatus(204);
 }
 
 // MODIFY
