@@ -54,7 +54,7 @@ function store(req, res) {
 
   // Controllo se ci sono tutti i parametri
   if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
-    res.status(400).json({
+    return res.status(400).json({
       error: "Invalid data",
     });
   }
@@ -62,7 +62,7 @@ function store(req, res) {
   const post = { id, title, content, img, tags };
 
   posts.push(post);
-  res.json(posts);
+  res.status(201).json(posts);
 }
 
 // UPDATE
@@ -89,7 +89,7 @@ function update(req, res) {
 
   // Controllo se ci sono tutti i parametri
   if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
-    res.status(400).json({
+    return res.status(400).json({
       error: "Invalid data",
     });
   }
