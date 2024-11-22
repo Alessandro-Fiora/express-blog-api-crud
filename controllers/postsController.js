@@ -68,13 +68,76 @@ function store(req, res) {
 // UPDATE
 function update(req, res) {
   const id = parseInt(req.params.id);
-  res.json(`Modifica integrale del post ${id}`);
+
+  // Controllo per ID non valido
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: "id not valid",
+    });
+  }
+
+  const post = posts.find((post) => post.id === id);
+
+  // Controllo per ID non presente nella lista
+  if (!post) {
+    return res.status(404).json({
+      error: "Resource not found",
+    });
+  }
+
+  const { title, content, img, tags } = req.body;
+
+  // Controllo se ci sono tutti i parametri
+  if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
+    res.status(400).json({
+      error: "Invalid data",
+    });
+  }
+
+  post.title = title;
+  post.content = content;
+  post.img = img;
+  post.tags = tags;
+
+  res.json(post);
 }
 
 // MODIFY
 function modify(req, res) {
   const id = parseInt(req.params.id);
-  res.json(`Modifica parziale del post ${id}`);
+
+  // Controllo per ID non valido
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: "id not valid",
+    });
+  }
+
+  const post = posts.find((post) => post.id === id);
+
+  // Controllo per ID non presente nella lista
+  if (!post) {
+    return res.status(404).json({
+      error: "Resource not found",
+    });
+  }
+
+  const { title, content, img, tags } = req.body;
+
+  if (title) {
+    post.title = title;
+  }
+  if (content) {
+    post.content = content;
+  }
+  if (img) {
+    post.img = img;
+  }
+  if (Array.isArray(tags) && tags?.length) {
+    post.tags = tags;
+  }
+
+  res.sendStatus(204);
 }
 
 // DESTROY
