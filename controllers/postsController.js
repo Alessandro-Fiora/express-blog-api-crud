@@ -2,8 +2,6 @@ const posts = require("../db/posts");
 
 // INDEX
 function index(req, res) {
-  console.log("Richiesta index posts");
-
   // FILTRO POST PER KEYWORD NEI TAGS
   let filteredPosts = posts;
 
@@ -51,7 +49,20 @@ function show(req, res) {
 
 // STORE
 function store(req, res) {
-  res.json("Crea nuovo post");
+  const { title, content, img, tags } = req.body;
+  const id = posts.at(-1).id + 1;
+
+  // Controllo se ci sono tutti i parametri
+  if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
+    res.status(400).json({
+      error: "Invalid data",
+    });
+  }
+
+  const post = { id, title, content, img, tags };
+
+  posts.push(post);
+  res.json(posts);
 }
 
 // UPDATE

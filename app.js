@@ -1,8 +1,11 @@
 require("dotenv").config();
-const express = require("express");
-const app = express();
 const port = process.env.HOST_PORT;
 const domain = process.env.HOST_DOMAIN;
+const express = require("express");
+const app = express();
+
+// JSON parser
+app.use(express.json());
 
 const postsRouter = require("./routers/posts");
 
