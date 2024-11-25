@@ -7,6 +7,7 @@ const domain = process.env.HOST_DOMAIN;
 
 // MIDDLEWARES
 const errorHandler = require("./middlewares/errorHandler");
+const notFoundHandler = require("./middlewares/notFoundHandler");
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -22,6 +23,7 @@ app.use("/posts", postsRouter);
 
 // ERROR HANDLERS
 app.use(errorHandler);
+app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`server listening on ${domain}:${port}`);
