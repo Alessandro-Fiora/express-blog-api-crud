@@ -30,18 +30,18 @@ function show(req, res) {
 
   // Controllo per ID non valido
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "id not valid",
-    });
+    const err = new Error("id not valid");
+    err.status = 400;
+    throw err;
   }
 
   const post = posts.find((post) => post.id === id);
 
   // Controllo per ID non presente nella lista
   if (!post) {
-    return res.status(404).json({
-      error: "Resource not found",
-    });
+    const err = new Error("resource not found");
+    err.status = 404;
+    throw err;
   }
 
   res.json(post);
@@ -54,9 +54,9 @@ function store(req, res) {
 
   // Controllo se ci sono tutti i parametri
   if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
-    return res.status(400).json({
-      error: "Invalid data",
-    });
+    const err = new Error("invalid data");
+    err.status = 400;
+    throw err;
   }
 
   const post = { id, title, content, img, tags };
@@ -71,27 +71,27 @@ function update(req, res) {
 
   // Controllo per ID non valido
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "id not valid",
-    });
+    const err = new Error("id not valid");
+    err.status = 400;
+    throw err;
   }
 
   const post = posts.find((post) => post.id === id);
 
   // Controllo per ID non presente nella lista
   if (!post) {
-    return res.status(404).json({
-      error: "Resource not found",
-    });
+    const err = new Error("resource not found");
+    err.status = 404;
+    throw err;
   }
 
   const { title, content, img, tags } = req.body;
 
   // Controllo se ci sono tutti i parametri
   if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
-    return res.status(400).json({
-      error: "Invalid data",
-    });
+    const err = new Error("invalid data");
+    err.status = 400;
+    throw err;
   }
 
   post.title = title;
@@ -108,18 +108,18 @@ function modify(req, res) {
 
   // Controllo per ID non valido
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "id not valid",
-    });
+    const err = new Error("id not valid");
+    err.status = 400;
+    throw err;
   }
 
   const post = posts.find((post) => post.id === id);
 
   // Controllo per ID non presente nella lista
   if (!post) {
-    return res.status(404).json({
-      error: "Resource not found",
-    });
+    const err = new Error("resource not found");
+    err.status = 404;
+    throw err;
   }
 
   const { title, content, img, tags } = req.body;
@@ -146,18 +146,18 @@ function destroy(req, res) {
 
   // Controllo per ID non valido
   if (isNaN(id)) {
-    return res.status(400).json({
-      error: "id not valid",
-    });
+    const err = new Error("id not valid");
+    err.status = 400;
+    throw err;
   }
 
   // Salvo l'elemento che sto eliminando e lo cerco nell'array
   const deleted = posts.find((post, index) => post.id === id);
   // Controllo per ID non presente nella lista
   if (!deleted) {
-    return res.status(404).json({
-      error: "Resource not found",
-    });
+    const err = new Error("resource not found");
+    err.status = 404;
+    throw err;
   }
 
   // Stampo in console l'elemento eliminato
