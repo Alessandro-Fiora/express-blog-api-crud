@@ -31,7 +31,7 @@ function show(req, res) {
   // Controllo per ID non valido
   if (isNaN(id)) {
     const err = new Error("id not valid");
-    err.status = 400;
+    // err.status = 400;
     throw err;
   }
 
@@ -49,17 +49,17 @@ function show(req, res) {
 
 // STORE
 function store(req, res) {
-  const { title, content, img, tags } = req.body;
+  const { title, content, img, category, published } = req.body;
   const id = posts.at(-1).id + 1;
 
   // Controllo se ci sono tutti i parametri
-  if (!title || !content || !img || !Array.isArray(tags) || !tags?.length) {
+  if (!title || !content || !img || !category) {
     const err = new Error("invalid data");
     err.status = 400;
     throw err;
   }
 
-  const post = { id, title, content, img, tags };
+  const post = { id, title, content, img, category, published };
 
   posts.push(post);
   res.status(201).json(posts);

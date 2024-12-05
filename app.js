@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const port = process.env.HOST_PORT;
 const domain = process.env.HOST_DOMAIN;
 
@@ -10,6 +11,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const notFoundHandler = require("./middlewares/notFoundHandler");
 
 app.use(express.json());
+app.use(cors());
 app.use(express.static("public"));
 
 // ROUTERS
